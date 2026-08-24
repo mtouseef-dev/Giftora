@@ -1,0 +1,966 @@
+GIFT & TOYS E-COMMERCE WEBSITE — COMPLETE DEVELOPMENT PLAN
+
+PROJECT GOAL
+Build a premium, aesthetic, professional Gift & Toys e-commerce website for a real client. The website should have a polished UI/UX, responsive frontend, secure backend, PostgreSQL database, product management, cart, checkout, payment, customer accounts, admin dashboard, and separate deployment.
+
+RECOMMENDED TECH STACK
+Frontend:
+- Next.js
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- Framer Motion
+
+Backend:
+- Node.js
+- Express.js
+- TypeScript
+- Prisma ORM
+- JWT
+- bcrypt
+- Zod
+
+Database:
+- PostgreSQL
+
+Other services:
+- Cloudinary — product images
+- Razorpay — Indian payments
+- GitHub — source control
+- Vercel — frontend deployment
+- Render — backend deployment
+
+1. WEBSITE STRUCTURE
+
+CUSTOMER SIDE
+
+HOME
+- Hero section
+- Featured categories
+- Best sellers
+- New arrivals
+- Personalized gifts
+- Toys collection
+- Why choose us
+- Customer reviews
+- Newsletter
+- Footer
+
+SHOP
+- All products
+- Gifts
+- Toys
+- Birthday gifts
+- Anniversary
+- Kids
+- Personalized gifts
+- Corporate gifts
+
+PRODUCT DETAIL
+- Product gallery
+- Product name
+- Price
+- Discount
+- Description
+- Variants
+- Quantity
+- Add to cart
+- Buy now
+- Reviews
+- Related products
+
+CART
+- Products
+- Quantity
+- Price
+- Discount
+- Shipping
+- Total
+- Checkout button
+
+CHECKOUT
+- Customer information
+- Address
+- Delivery details
+- Coupon
+- Order summary
+- Razorpay payment
+
+ACCOUNT
+- Profile
+- Orders
+- Addresses
+- Wishlist
+
+ADMIN
+- Dashboard
+- Products
+- Categories
+- Orders
+- Customers
+- Reviews
+- Coupons
+- Inventory
+- Settings
+
+2. UI/UX STYLE
+
+Brand personality:
+- Premium
+- Playful
+- Warm
+- Modern
+- Aesthetic
+- Professional
+
+Visual direction:
+- Cream/off-white background
+- Deep plum/burgundy primary color
+- Soft peach accents
+- Warm yellow accent
+- Charcoal text
+- Warm gray secondary text
+- Rounded cards
+- Premium product photography
+- Large whitespace
+- Soft shadows
+- Elegant typography
+- Smooth transitions
+
+Avoid:
+- Excessive gradients
+- Too much glassmorphism
+- Excessive 3D
+- Too many animations
+- Overcrowded layouts
+- Generic Amazon-style UI
+
+The products should remain the visual hero.
+
+3. HOMEPAGE LAYOUT
+
+Navbar:
+LOGO | Shop | Gifts | Toys | About | Search | Wishlist | Cart | Account
+
+Hero:
+- Large emotional headline
+- Short brand description
+- Shop Gifts button
+- Explore Toys button
+- Premium lifestyle/product image
+
+Sections:
+1. Hero
+2. Shop by Occasion
+3. Best Sellers
+4. New Arrivals
+5. Personalized Gifts
+6. Gift Finder
+7. Toys Collection
+8. Why Choose Us
+9. Customer Reviews
+10. Newsletter
+11. Footer
+
+4. ANIMATIONS
+
+Use subtle premium animations:
+- Page fade/slide transitions
+- Product image zoom on hover
+- Button hover transitions
+- Cart icon animation
+- Smooth image gallery transitions
+- Scroll reveal animations
+- Micro-interactions
+
+Keep animations elegant and fast.
+
+5. FRONTEND PROJECT STRUCTURE
+
+gift-store/
+├── src/
+│   ├── app/
+│   │   ├── page.tsx
+│   │   ├── shop/
+│   │   ├── product/[slug]/
+│   │   ├── cart/
+│   │   ├── checkout/
+│   │   ├── account/
+│   │   └── admin/
+│   ├── components/
+│   │   ├── navbar/
+│   │   ├── hero/
+│   │   ├── product/
+│   │   ├── cart/
+│   │   ├── checkout/
+│   │   └── ui/
+│   ├── lib/
+│   │   ├── api.ts
+│   │   ├── auth.ts
+│   │   └── utils.ts
+│   ├── hooks/
+│   └── types/
+├── public/
+└── package.json
+
+6. BACKEND PROJECT STRUCTURE
+
+gift-store-backend/
+├── src/
+│   ├── controllers/
+│   ├── routes/
+│   ├── middleware/
+│   ├── services/
+│   ├── utils/
+│   ├── config/
+│   └── server.ts
+├── prisma/
+│   └── schema.prisma
+├── package.json
+└── tsconfig.json
+
+Do not create one huge server.js file. Keep controllers, services, routes, middleware and utilities separate.
+
+7. DATABASE DESIGN
+
+Tables:
+
+users
+- id
+- name
+- email
+- passwordHash
+- role
+- createdAt
+- updatedAt
+
+categories
+- id
+- name
+- slug
+- image
+- description
+
+products
+- id
+- name
+- slug
+- description
+- price
+- discount
+- sku
+- stock
+- categoryId
+- featured
+- createdAt
+- updatedAt
+
+product_images
+- id
+- productId
+- imageUrl
+- publicId
+- sortOrder
+
+product_variants
+- id
+- productId
+- name
+- value
+- priceAdjustment
+
+cart
+- id
+- userId
+
+cart_items
+- id
+- cartId
+- productId
+- quantity
+- variantId
+
+addresses
+- id
+- userId
+- name
+- phone
+- address
+- city
+- state
+- pincode
+
+orders
+- id
+- userId
+- addressId
+- subtotal
+- discount
+- shipping
+- tax
+- total
+- status
+- paymentStatus
+- createdAt
+- updatedAt
+
+order_items
+- id
+- orderId
+- productId
+- productName
+- price
+- quantity
+- variant
+
+payments
+- id
+- orderId
+- razorpayOrderId
+- razorpayPaymentId
+- amount
+- status
+- createdAt
+
+reviews
+- id
+- userId
+- productId
+- rating
+- comment
+- createdAt
+
+wishlist
+- id
+- userId
+- productId
+
+coupons
+- id
+- code
+- discountType
+- discountValue
+- minimumAmount
+- expiresAt
+- active
+
+inventory
+- id
+- productId
+- quantity
+- updatedAt
+
+8. DATABASE RELATIONSHIPS
+
+USER
+├── Cart
+│   └── Cart Items
+│       └── Products
+├── Orders
+│   └── Order Items
+│       └── Products
+├── Addresses
+├── Wishlist
+│   └── Products
+└── Reviews
+    └── Products
+
+CATEGORY
+└── Products
+    ├── Images
+    ├── Variants
+    └── Inventory
+
+9. API DESIGN
+
+Products:
+GET    /api/products
+GET    /api/products/:slug
+POST   /api/admin/products
+PUT    /api/admin/products/:id
+DELETE /api/admin/products/:id
+
+Authentication:
+POST /api/auth/register
+POST /api/auth/login
+POST /api/auth/logout
+GET  /api/auth/me
+
+Cart:
+GET    /api/cart
+POST   /api/cart/items
+PUT    /api/cart/items/:id
+DELETE /api/cart/items/:id
+
+Orders:
+POST /api/orders
+GET  /api/orders
+GET  /api/orders/:id
+
+Payments:
+POST /api/payment/create
+POST /api/payment/verify
+
+Admin:
+GET /api/admin/orders
+PUT /api/admin/orders/:id/status
+GET /api/admin/customers
+GET /api/admin/analytics
+
+10. AUTHENTICATION
+
+Roles:
+- CUSTOMER
+- ADMIN
+
+Use:
+- JWT authentication
+- bcrypt password hashing
+- Protected admin routes
+- Protected customer routes
+- Input validation with Zod
+
+Never store plain-text passwords.
+
+11. PRODUCT MANAGEMENT
+
+Admin should be able to:
+- Add product
+- Edit product
+- Delete product
+- Upload multiple images
+- Select category
+- Set price
+- Set discount
+- Set SKU
+- Set stock
+- Add variants
+- Add tags
+- Mark as featured
+- Manage inventory
+
+Example:
+
+Product:
+Personalized Teddy Bear
+
+Price:
+₹899
+
+Discount:
+10%
+
+Stock:
+24
+
+Category:
+Personalized Gifts
+
+Variants:
+Small
+Medium
+Large
+
+12. IMAGE MANAGEMENT
+
+Use Cloudinary.
+
+Flow:
+
+Admin uploads image
+→ Cloudinary
+→ Cloudinary returns image URL/public ID
+→ Backend saves URL in PostgreSQL
+
+Do not store large image files directly inside PostgreSQL.
+
+13. CART LOGIC
+
+Customer:
+Product → Add to Cart → Cart → Checkout
+
+Backend must calculate:
+- Current product price
+- Quantity
+- Subtotal
+- Discount
+- Shipping
+- Tax
+- Total
+
+Never trust prices sent from the frontend. The backend should fetch the current price from the database.
+
+14. ORDER STATUS
+
+Use:
+
+PENDING
+CONFIRMED
+PROCESSING
+SHIPPED
+OUT_FOR_DELIVERY
+DELIVERED
+CANCELLED
+
+Payment status:
+
+PENDING
+PAID
+FAILED
+REFUNDED
+
+15. RAZORPAY PAYMENT FLOW
+
+Customer
+→ Checkout
+→ Backend creates order
+→ Razorpay Checkout
+→ Customer pays
+→ Razorpay returns payment information
+→ Backend verifies Razorpay signature
+→ Payment marked PAID
+→ Order marked CONFIRMED
+
+Never allow the frontend alone to declare a payment successful.
+
+16. SEARCH AND FILTERS
+
+Shop page should include:
+- Search
+- Category
+- Price range
+- Occasion
+- Age group
+- Availability
+- Rating
+- Sort
+
+Example:
+Search: Teddy
+Category: Gifts
+Price: ₹500–₹2000
+Occasion: Birthday
+Sort: Price Low to High
+
+17. WISHLIST
+
+Customer can save products to wishlist.
+
+wishlist:
+- id
+- userId
+- productId
+- createdAt
+
+18. REVIEWS
+
+Only allow verified customers who purchased the product to review it.
+
+Example:
+★★★★★
+Beautiful product and fast delivery!
+
+19. MOBILE RESPONSIVENESS
+
+Use mobile-first responsive design.
+
+Desktop:
+Full navbar + multi-column product grid
+
+Mobile:
+Hamburger + Logo + Cart
+
+Product grid:
+2 columns on mobile where appropriate.
+
+Do not simply shrink the desktop UI. Create a proper mobile layout.
+
+20. DEVELOPMENT PROCESS
+
+PHASE 1 — PLANNING
+1. Understand client requirements
+2. Decide brand name
+3. Create logo
+4. Choose colors
+5. Define categories
+6. Define pages
+7. Define user roles
+8. Decide payment method
+9. Decide shipping requirements
+
+PHASE 2 — UI/UX
+Design:
+- Home
+- Shop
+- Product detail
+- Cart
+- Checkout
+- Login
+- Register
+- Account
+- Orders
+- Admin dashboard
+
+Finish the UI before integrating the backend.
+
+PHASE 3 — FRONTEND
+Create Next.js project.
+
+Command:
+npx create-next-app@latest gift-store
+
+Use:
+- TypeScript
+- ESLint
+- Tailwind CSS
+- App Router
+
+Build:
+- Navbar
+- Hero
+- Category cards
+- Product cards
+- Product page
+- Cart
+- Checkout
+- Footer
+- Account pages
+- Admin pages
+
+Initially use mock JSON data.
+
+PHASE 4 — BACKEND
+Create separate backend project.
+
+Commands:
+npm init -y
+
+Install:
+- express
+- typescript
+- prisma
+- @prisma/client
+- bcrypt
+- jsonwebtoken
+- cors
+- zod
+- razorpay
+- cloudinary
+
+Build:
+- Authentication
+- Products API
+- Categories API
+- Cart API
+- Orders API
+- Payment API
+- Admin API
+- Review API
+- Wishlist API
+
+PHASE 5 — DATABASE
+Create PostgreSQL database.
+
+Configure Prisma.
+
+Create schema.prisma.
+
+Run:
+npx prisma migrate dev
+
+Run:
+npx prisma studio
+
+Use Prisma Studio to inspect database records.
+
+PHASE 6 — FRONTEND/BACKEND INTEGRATION
+
+Local setup:
+
+Frontend:
+http://localhost:3000
+
+Backend:
+http://localhost:5000
+
+Frontend calls:
+http://localhost:5000/api
+
+Create:
+src/lib/api.ts
+
+Use environment variable:
+
+NEXT_PUBLIC_API_URL=http://localhost:5000
+
+PHASE 7 — PAYMENT
+Integrate Razorpay.
+
+Test:
+- Successful payment
+- Failed payment
+- Payment verification
+- Order creation
+- Duplicate payment handling
+
+PHASE 8 — TESTING
+
+Authentication:
+- Register
+- Login
+- Logout
+- Wrong password
+- Duplicate email
+
+Products:
+- Add
+- Edit
+- Delete
+- Search
+- Filter
+
+Cart:
+- Add
+- Remove
+- Quantity
+- Stock
+- Total
+
+Orders:
+- Checkout
+- Payment
+- Order creation
+- Order status
+
+Security:
+- JWT
+- Admin protection
+- Password hashing
+- Input validation
+- CORS
+- Environment variables
+
+PHASE 9 — FRONTEND DEPLOYMENT ON VERCEL
+
+1. Push frontend to GitHub.
+2. Open Vercel.
+3. Import GitHub repository.
+4. Configure environment variables.
+5. Deploy.
+
+Frontend environment variable:
+
+NEXT_PUBLIC_API_URL=https://your-backend.onrender.com
+
+Production flow:
+
+GitHub
+→ Vercel
+→ Next.js frontend
+
+PHASE 10 — BACKEND DEPLOYMENT ON RENDER
+
+1. Push backend to GitHub.
+2. Open Render.
+3. Create New Web Service.
+4. Select backend GitHub repository.
+5. Configure build command.
+6. Configure start command.
+7. Add environment variables.
+8. Deploy.
+
+Build command:
+npm install && npm run build
+
+Start command:
+npm start
+
+Backend environment variables:
+
+DATABASE_URL=your_postgresql_connection
+JWT_SECRET=your_secret
+RAZORPAY_KEY_ID=your_key
+RAZORPAY_KEY_SECRET=your_secret
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+FRONTEND_URL=https://yourfrontend.vercel.app
+
+11. PRODUCTION ARCHITECTURE
+
+CUSTOMER
+↓
+VERCEL
+Next.js Frontend
+↓
+HTTPS API
+↓
+RENDER
+Node.js + Express Backend
+↓
+PostgreSQL
+↓
+Cloudinary
+↓
+Razorpay
+
+GitHub stores the source code.
+
+12. ADVANCED FEATURES TO IMPRESS THE CLIENT
+
+GIFT FINDER
+
+Questions:
+Who is it for?
+- Boyfriend
+- Girlfriend
+- Friend
+- Mom
+- Dad
+- Kids
+
+Occasion:
+- Birthday
+- Anniversary
+- Wedding
+- Festival
+
+Budget:
+₹500–₹3000
+
+Button:
+FIND MY GIFT
+
+PERSONALIZED GIFTS
+
+Fields:
+- Name
+- Personalized message
+- Photo upload
+- Custom option
+
+OCCASION REMINDERS
+Allow users to save:
+- Birthday
+- Anniversary
+- Wedding
+
+Send reminders before the occasion.
+
+COUPON SYSTEM
+
+Examples:
+WELCOME10
+BIRTHDAY20
+FESTIVE15
+
+ADMIN ANALYTICS
+
+Show:
+- Today's sales
+- Total orders
+- Customers
+- Products
+- Revenue chart
+- Orders chart
+- Best-selling products
+- Low-stock products
+
+13. IMPORTANT DEVELOPMENT RULE
+
+Build in four major stages:
+
+STAGE 1
+UI/UX
+↓
+STAGE 2
+Frontend functionality
+↓
+STAGE 3
+Backend + Database
+↓
+STAGE 4
+Integration + Payment + Deployment
+
+Do not build everything at the same time.
+
+14. FINAL PROJECT STRUCTURE
+
+GIFT STORE
+├── CUSTOMER
+│   ├── Home
+│   ├── Shop
+│   ├── Product
+│   ├── Cart
+│   ├── Checkout
+│   ├── Payment
+│   ├── Account
+│   ├── Orders
+│   └── Wishlist
+│
+└── ADMIN
+    ├── Dashboard
+    ├── Products
+    ├── Categories
+    ├── Orders
+    ├── Customers
+    ├── Inventory
+    ├── Coupons
+    ├── Reviews
+    └── Analytics
+
+DEPLOYMENT
+
+Frontend → Vercel
+Backend → Render
+Database → PostgreSQL
+Images → Cloudinary
+Payment → Razorpay
+Source Code → GitHub
+
+RECOMMENDED BUILD ORDER
+
+1. Finalize brand and requirements
+2. Create sitemap
+3. Create UI/UX design system
+4. Build homepage
+5. Build shop page
+6. Build product detail page
+7. Build cart
+8. Build checkout UI
+9. Build login/register
+10. Build account pages
+11. Build admin UI
+12. Build Express backend
+13. Create PostgreSQL database
+14. Create Prisma schema
+15. Build authentication
+16. Build product APIs
+17. Build cart APIs
+18. Build order APIs
+19. Build payment integration
+20. Build Cloudinary image upload
+21. Connect frontend to backend
+22. Test everything
+23. Deploy backend to Render
+24. Deploy frontend to Vercel
+25. Configure production environment variables
+26. Test production website
+27. Connect custom domain
+28. Final client handover
+
+FINAL GOAL
+
+The final product should feel like a premium modern gift brand rather than a basic college/project e-commerce website.
+
+Focus on:
+- Excellent UI/UX
+- Fast loading
+- Mobile responsiveness
+- Clean code
+- Secure authentication
+- Proper database relationships
+- Reliable payment verification
+- Professional admin dashboard
+- SEO-friendly pages
+- Production-ready deployment
