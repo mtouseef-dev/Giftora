@@ -22,8 +22,8 @@ export default function AdminLoginPage() {
   const router = useRouter();
   const { loginAdmin, loginAsAdmin } = useStore();
 
-  const [email, setEmail] = useState('admin@giftora.com');
-  const [password, setPassword] = useState('admin123');
+  const [email, setEmail] = useState('touseef@giftora.com');
+  const [password, setPassword] = useState('Touseef@123');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
@@ -33,7 +33,7 @@ export default function AdminLoginPage() {
     if (ok) {
       router.push('/admin');
     } else {
-      setError('Invalid credentials. Default: admin@giftora.com / admin123');
+      setError('Invalid credentials. Default: touseef@giftora.com / Touseef@123');
     }
   };
 
@@ -133,7 +133,7 @@ export default function AdminLoginPage() {
               className="w-full py-2.5 rounded-xl bg-plum-800/80 hover:bg-plum-800 text-gold-300 font-bold text-xs border border-gold-400/40 flex items-center justify-center gap-2 transition"
             >
               <Sparkles className="w-3.5 h-3.5" />
-              1-Click Owner Master Bypass (admin@giftora.com)
+              1-Click Owner Master Bypass (touseef@giftora.com)
             </button>
           </div>
 
@@ -141,8 +141,8 @@ export default function AdminLoginPage() {
             <p className="font-bold text-gold-300 flex items-center gap-1.5">
               <Database className="w-3.5 h-3.5" /> Database &amp; System Info:
             </p>
-            <p>Default Master Login: <code className="bg-plum-900 px-1 py-0.5 rounded text-white">admin@giftora.com</code></p>
-            <p>Default Master Password: <code className="bg-plum-900 px-1 py-0.5 rounded text-white">admin123</code></p>
+            <p>Default Master Login: <code className="bg-plum-900 px-1 py-0.5 rounded text-white">touseef@giftora.com</code></p>
+            <p>Default Master Password: <code className="bg-plum-900 px-1 py-0.5 rounded text-white">Touseef@123</code></p>
           </div>
 
           <div className="text-center pt-1">

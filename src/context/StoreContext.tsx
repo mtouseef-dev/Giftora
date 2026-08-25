@@ -127,10 +127,10 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       name: 'Aarav Singhania',
       phone: '+91 98765 43210',
       email: 'aarav.singhania@example.com',
-      address: 'Penthouse 402, Magnolia Residency, Bandra West',
-      city: 'Mumbai',
-      state: 'Maharashtra',
-      pincode: '400050',
+      address: 'Darbar colony 402, Magnolia Residency, Jaipur',
+      city: 'Jaipur',
+      state: 'Rajasthan',
+      pincode: '302002',
       isDefault: true,
     },
     {
@@ -158,10 +158,10 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         id: 'addr-1',
         name: 'Aarav Singhania',
         phone: '+91 98765 43210',
-        address: 'Penthouse 402, Magnolia Residency, Bandra West',
-        city: 'Mumbai',
-        state: 'Maharashtra',
-        pincode: '400050',
+        address: 'Darbar colony 402, Magnolia Residency, Jaipur',
+        city: 'Jaipur',
+        state: 'Rajasthan',
+        pincode: '302002',
       },
       items: [
         {
@@ -462,11 +462,11 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const loginAdmin = (email: string, password?: string): boolean => {
-    if (email === 'admin@giftora.com' && (password === 'admin123' || !password)) {
+    if (email === 'touseef@giftora.com' && (password === 'Touseef@123' || !password)) {
       setUser({
         id: 'usr-admin',
         name: 'Store Owner / Admin',
-        email: 'admin@giftora.com',
+        email: 'touseef@giftora.com',
         phone: '+91 99999 00000',
         role: 'ADMIN',
         avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=150&auto=format&fit=crop',
@@ -474,8 +474,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       });
       showToast('Authenticated as Store Owner (Admin)', 'success');
       return true;
-    } else if (password && password !== 'admin123') {
-      showToast('Invalid admin credentials. Use admin@giftora.com / admin123', 'error');
+    } else if (password && password !== 'Touseef@123') {
+      showToast('Invalid admin credentials. Use touseef@giftora.com / Touseef@123', 'error');
       return false;
     } else {
       // Allow general admin login
@@ -508,13 +508,13 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setUser({
       id: 'usr-admin',
       name: 'Admin Manager',
-      email: 'admin@giftora.com',
+      email: 'touseef@giftora.com',
       phone: '+91 99999 00000',
       role: 'ADMIN',
       avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=150&auto=format&fit=crop',
       createdAt: '2025-11-01',
     });
-    showToast('Switched to Admin Role (admin@giftora.com)', 'success');
+    showToast('Switched to Admin Role (touseef@giftora.com)', 'success');
   };
 
   const logout = () => {
