@@ -147,12 +147,12 @@ function AccountContent() {
                 <SlidersHorizontal className="w-3.5 h-3.5" /> Admin Control Panel
               </Link>
             ) : (
-              <button
-                onClick={loginAsAdmin}
-                className="px-4 py-2 rounded-xl bg-plum-100 text-plum-900 hover:bg-plum-200 font-bold text-xs border border-plum-300 transition"
+              <Link
+                href="/admin/login"
+                className="px-4 py-2 rounded-xl bg-plum-100 text-plum-900 hover:bg-plum-200 font-bold text-xs border border-plum-300 transition flex items-center gap-1.5"
               >
-                Switch to Admin Demo
-              </button>
+                <SlidersHorizontal className="w-3.5 h-3.5 text-plum-700" /> Owner / Admin Login
+              </Link>
             )}
 
             {user ? (

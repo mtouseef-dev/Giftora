@@ -15,16 +15,62 @@ import {
   ArrowLeft,
   Gift,
   Sparkles,
-  ShieldCheck
+  ShieldCheck,
+  ShieldAlert,
+  KeyRound
 } from 'lucide-react';
 import { useStore } from '@/context/StoreContext';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { user, loginAsAdmin } = useStore();
+  const { user } = useStore();
 
+  // Allow login page access
   if (pathname === '/admin/login') {
     return <>{children}</>;
+  }
+
+  // Access Control Guard: Block non-admin users
+  if (!user || user.role !== 'ADMIN') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-plum-950 via-charcoal-900 to-plum-950 text-cream-50 flex items-center justify-center p-4">
+        <div className="max-w-md w-full bg-plum-900/80 backdrop-blur-xl border border-plum-700 p-8 rounded-3xl text-center space-y-6 shadow-2xl">
+          <div className="w-16 h-16 bg-rose-500/10 border-2 border-rose-500/30 text-rose-400 rounded-2xl flex items-center justify-center mx-auto shadow-glow">
+            <ShieldAlert className="w-8 h-8" />
+          </div>
+
+          <div className="space-y-2">
+            <span className="inline-block text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">
+              Access Restricted
+            </span>
+            <h1 className="font-serif text-2xl font-bold text-white">
+              Administrator Access Required
+            </h1>
+            <p className="text-xs text-cream-300 leading-relaxed">
+              You are currently logged in as {user ? <strong className="text-white">{user.email}</strong> : 'a Customer / Guest'}. Only authorized store managers can view or edit products, database, orders, and system settings.
+            </p>
+          </div>
+
+          <div className="pt-2 space-y-3">
+            <Link
+              href="/admin/login"
+              className="w-full py-3 rounded-xl bg-gold-400 hover:bg-gold-500 text-plum-950 font-extrabold text-xs shadow-glow flex items-center justify-center gap-2 transition"
+            >
+              <KeyRound className="w-4 h-4" />
+              Log In to Admin Portal
+            </Link>
+
+            <Link
+              href="/"
+              className="w-full py-3 rounded-xl bg-plum-800 hover:bg-plum-700 text-cream-200 font-bold text-xs flex items-center justify-center gap-2 transition border border-plum-700"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Return to Customer Storefront
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   const navItems = [
@@ -54,7 +100,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <Gift className="w-4 h-4 text-gold-400" />
             <span className="font-serif text-lg font-bold">Giftora Control Center</span>
             <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-gold-400 text-plum-950">
-              Admin
+              Admin ({user.name})
             </span>
           </div>
         </div>
@@ -62,7 +108,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="flex items-center gap-3 text-xs">
           <div className="hidden sm:flex items-center gap-1 text-cream-300">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-            <span>PostgreSQL &amp; Cloudinary Connected</span>
+            <span>Authenticated Admin Session</span>
           </div>
         </div>
       </header>

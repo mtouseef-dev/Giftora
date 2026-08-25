@@ -244,53 +244,18 @@ export const Navbar: React.FC = () => {
 
                         {/* Dedicated Admin Portal Link */}
                         <Link
-                          href="/admin/login"
+                          href={user?.role === 'ADMIN' ? '/admin' : '/admin/login'}
                           onClick={() => setIsUserMenuOpen(false)}
                           className="flex items-center justify-between px-3 py-2 text-xs font-bold text-plum-900 bg-plum-50 hover:bg-plum-100 rounded-xl transition"
                         >
                           <span className="flex items-center gap-2">
                             <SlidersHorizontal className="w-4 h-4 text-plum-700" />
-                            Owner / Admin Portal
+                            {user?.role === 'ADMIN' ? 'Admin Dashboard' : 'Owner / Admin Portal'}
                           </span>
                           <span className="text-[10px] bg-plum-800 text-gold-300 font-bold px-1.5 py-0.5 rounded">
-                            PRO
+                            {user?.role === 'ADMIN' ? 'ACTIVE' : 'LOGIN'}
                           </span>
                         </Link>
-
-                        {/* Switch Role Fast Toggle */}
-                        <div className="mt-2 p-2 bg-cream-100 rounded-xl">
-                          <p className="text-[10px] font-bold text-charcoal-500 uppercase tracking-wider mb-1.5">
-                            Demo Role Switcher
-                          </p>
-                          <div className="grid grid-cols-2 gap-1.5">
-                            <button
-                              onClick={() => {
-                                loginAsCustomer();
-                                setIsUserMenuOpen(false);
-                              }}
-                              className={`text-[11px] font-semibold py-1 rounded-lg border transition ${
-                                user?.role === 'CUSTOMER'
-                                  ? 'bg-white border-plum-600 text-plum-800 shadow-sm'
-                                  : 'border-cream-300 text-charcoal-600 hover:bg-white'
-                              }`}
-                            >
-                              Customer
-                            </button>
-                            <button
-                              onClick={() => {
-                                loginAsAdmin();
-                                setIsUserMenuOpen(false);
-                              }}
-                              className={`text-[11px] font-semibold py-1 rounded-lg border transition ${
-                                user?.role === 'ADMIN'
-                                  ? 'bg-plum-800 border-plum-800 text-white shadow-sm'
-                                  : 'border-cream-300 text-charcoal-600 hover:bg-white'
-                              }`}
-                            >
-                              Admin
-                            </button>
-                          </div>
-                        </div>
 
                         {user && (
                           <button
