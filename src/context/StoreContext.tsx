@@ -462,7 +462,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const loginAdmin = (email: string, password?: string): boolean => {
-    if (email === 'touseef@giftora.com' && (password === 'Touseef@123' || !password)) {
+    if (email.trim().toLowerCase() === 'touseef@giftora.com' && password === 'Touseef@123') {
       setUser({
         id: 'usr-admin',
         name: 'Store Owner / Admin',
@@ -474,20 +474,9 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       });
       showToast('Authenticated as Store Owner (Admin)', 'success');
       return true;
-    } else if (password && password !== 'Touseef@123') {
-      showToast('Invalid admin credentials. Use touseef@giftora.com / Touseef@123', 'error');
-      return false;
     } else {
-      // Allow general admin login
-      setUser({
-        id: `usr-admin-${Date.now()}`,
-        name: 'Store Administrator',
-        email,
-        role: 'ADMIN',
-        createdAt: '2025-11-01',
-      });
-      showToast('Admin logged in', 'success');
-      return true;
+      showToast('Invalid email or password', 'error');
+      return false;
     }
   };
 
@@ -514,7 +503,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=150&auto=format&fit=crop',
       createdAt: '2025-11-01',
     });
-    showToast('Switched to Admin Role (touseef@giftora.com)', 'success');
+    showToast('Switched to Admin Role', 'success');
   };
 
   const logout = () => {

@@ -20,10 +20,10 @@ import { useStore } from '@/context/StoreContext';
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const { loginAdmin, loginAsAdmin } = useStore();
+  const { loginAdmin } = useStore();
 
-  const [email, setEmail] = useState('touseef@giftora.com');
-  const [password, setPassword] = useState('Touseef@123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
@@ -33,13 +33,8 @@ export default function AdminLoginPage() {
     if (ok) {
       router.push('/admin');
     } else {
-      setError('Invalid credentials. Default: touseef@giftora.com / Touseef@123');
+      setError('Invalid email or password. Please check your credentials and try again.');
     }
-  };
-
-  const handleQuickMasterLogin = () => {
-    loginAsAdmin();
-    router.push('/admin');
   };
 
   return (
@@ -58,7 +53,7 @@ export default function AdminLoginPage() {
             Store Owner &amp; Admin Portal
           </h1>
           <p className="text-xs text-cream-300">
-            Access analytics, MongoDB database explorer, product catalog, and order fulfillment.
+            Access analytics, database explorer, product catalog, and order fulfillment.
           </p>
         </div>
 
@@ -74,35 +69,40 @@ export default function AdminLoginPage() {
                 <input
                   type="email"
                   required
+                  autoComplete="username"
+                  placeholder="touseef@giftora.com"
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
                     setError('');
                   }}
-                  className="w-full pl-10 pr-4 py-2.5 bg-plum-950/80 rounded-xl border border-plum-700 text-white font-mono text-xs focus:outline-none focus:border-gold-400"
+                  className="w-full pl-10 pr-4 py-2.5 bg-plum-950/80 rounded-xl border border-plum-700 text-white font-mono text-xs focus:outline-none focus:border-gold-400 placeholder:text-plum-400/50"
                 />
               </div>
             </div>
 
             {/* Password Field */}
             <div>
-              <label className="block font-bold text-cream-200 mb-1.5">Admin Master Key / Password</label>
+              <label className="block font-bold text-cream-200 mb-1.5">Admin Password</label>
               <div className="relative">
                 <Lock className="w-4 h-4 text-plum-300 absolute left-3.5 top-3" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   required
+                  autoComplete="current-password"
+                  placeholder="••••••••"
                   value={password}
                   onChange={(e) => {
                     setPassword(e.target.value);
                     setError('');
                   }}
-                  className="w-full pl-10 pr-10 py-2.5 bg-plum-950/80 rounded-xl border border-plum-700 text-white font-mono text-xs focus:outline-none focus:border-gold-400"
+                  className="w-full pl-10 pr-10 py-2.5 bg-plum-950/80 rounded-xl border border-plum-700 text-white font-mono text-xs focus:outline-none focus:border-gold-400 placeholder:text-plum-400/50"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-3 text-plum-300 hover:text-white"
+                  className="absolute right-3.5 top-3 text-plum-300 hover:text-white transition"
+                  title={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -125,24 +125,14 @@ export default function AdminLoginPage() {
             </button>
           </form>
 
-          {/* Quick 1-Click Master Access for Demo */}
-          <div className="pt-2 border-t border-plum-800 space-y-2">
-            <button
-              type="button"
-              onClick={handleQuickMasterLogin}
-              className="w-full py-2.5 rounded-xl bg-plum-800/80 hover:bg-plum-800 text-gold-300 font-bold text-xs border border-gold-400/40 flex items-center justify-center gap-2 transition"
-            >
-              <Sparkles className="w-3.5 h-3.5" />
-              1-Click Owner Master Bypass (touseef@giftora.com)
-            </button>
-          </div>
-
-          <div className="p-3 rounded-2xl bg-plum-950/60 border border-plum-800 text-[11px] text-cream-300 space-y-1">
-            <p className="font-bold text-gold-300 flex items-center gap-1.5">
-              <Database className="w-3.5 h-3.5" /> Database &amp; System Info:
+          {/* Security Notice */}
+          <div className="p-3.5 rounded-2xl bg-plum-950/70 border border-plum-800 text-[11px] text-cream-300 space-y-1">
+            <p className="font-bold text-emerald-400 flex items-center gap-1.5">
+              <ShieldCheck className="w-4 h-4 text-emerald-400" /> Secure Admin Access
             </p>
-            <p>Default Master Login: <code className="bg-plum-900 px-1 py-0.5 rounded text-white">touseef@giftora.com</code></p>
-            <p>Default Master Password: <code className="bg-plum-900 px-1 py-0.5 rounded text-white">Touseef@123</code></p>
+            <p className="text-cream-300/80 leading-relaxed">
+              Enter your credentials manually or use your browser/device password manager to automatically fill saved credentials securely.
+            </p>
           </div>
 
           <div className="text-center pt-1">
